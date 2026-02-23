@@ -4,6 +4,15 @@ import { agents, initialTasks, costData, usageData } from './data/mockData';
 import AgentCard from './components/AgentCard';
 import KanbanBoard from './components/KanbanBoard';
 import UsageView from './components/UsageView';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export default function App() {
   const [tasks, setTasks] = useState(initialTasks);
@@ -33,12 +42,12 @@ export default function App() {
           <div className="flex-1 max-w-xl mx-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search tasks, activity, jobs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-cyan-500 focus:bg-white transition-colors"
+                className="pl-10"
               />
             </div>
           </div>
@@ -46,11 +55,11 @@ export default function App() {
           {/* Right - Cost HUD */}
           <div className="flex items-center gap-6 text-sm">
             <div className="text-right">
-              <div className="text-gray-400 text-xs">TODAY</div>
+              <div className="text-gray-400 text-xs uppercase">Today</div>
               <div className="font-semibold">${costData.today.toFixed(2)}</div>
             </div>
             <div className="text-right">
-              <div className="text-gray-400 text-xs">FEB</div>
+              <div className="text-gray-400 text-xs uppercase">Feb</div>
               <div className="font-semibold">${costData.month.toFixed(2)}</div>
             </div>
           </div>
@@ -59,38 +68,28 @@ export default function App() {
 
       <div className="max-w-7xl mx-auto p-6">
         {/* Tab Navigation */}
-        <div className="flex gap-6 mb-6 border-b border-gray-200">
-          <button
-            onClick={() => setView('tasks')}
-            className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-              view === 'tasks' 
-                ? 'border-cyan-500 text-cyan-600' 
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            Tasks
-          </button>
-          <button
-            onClick={() => setView('agents')}
-            className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-              view === 'agents' 
-                ? 'border-cyan-500 text-cyan-600' 
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            Agents
-          </button>
-          <button
-            onClick={() => setView('usage')}
-            className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
-              view === 'usage' 
-                ? 'border-cyan-500 text-cyan-600' 
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            Usage & Cost
-          </button>
-        </div>
+        <Tabs value={view} onValueChange={setView} className="mb-6">
+          <TabsList className="bg-transparent border-b border-gray-200 rounded-none w-full justify-start gap-6 h-auto p-0">
+            <TabsTrigger 
+              value="tasks" 
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-cyan-500 data-[state=active]:text-cyan-600 data-[state=active]:shadow-none bg-transparent px-0 pb-3"
+            >
+              Tasks
+            </TabsTrigger>
+            <TabsTrigger 
+              value="agents"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-cyan-500 data-[state=active]:text-cyan-600 data-[state=active]:shadow-none bg-transparent px-0 pb-3"
+            >
+              Agents
+            </TabsTrigger>
+            <TabsTrigger 
+              value="usage"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-cyan-500 data-[state=active]:text-cyan-600 data-[state=active]:shadow-none bg-transparent px-0 pb-3"
+            >
+              Usage & Cost
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
         {/* Tasks View */}
         {view === 'tasks' && (
@@ -104,31 +103,41 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
+                  <Input
                     type="text"
                     placeholder="Search tasks..."
-                    className="bg-white border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm w-48 focus:outline-none focus:border-cyan-500"
+                    className="pl-10 w-48"
                   />
                 </div>
                 
-                <button className="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white hover:bg-gray-50">
-                  All agents
-                  <ChevronDown className="w-4 h-4" />
-                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      All agents
+                      <ChevronDown className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>All agents</DropdownMenuItem>
+                    {agents.map(a => (
+                      <DropdownMenuItem key={a.id}>{a.name}</DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
                 <div className="flex border border-gray-200 rounded-lg overflow-hidden">
-                  <button className="p-2 bg-white hover:bg-gray-50 border-r border-gray-200">
+                  <Button variant="ghost" size="icon" className="rounded-none border-r">
                     <LayoutGrid className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 bg-white hover:bg-gray-50">
+                  </Button>
+                  <Button variant="ghost" size="icon" className="rounded-none">
                     <List className="w-4 h-4" />
-                  </button>
+                  </Button>
                 </div>
                 
-                <button className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-white rounded-lg text-sm font-medium hover:bg-cyan-600 transition-colors">
+                <Button className="gap-2 bg-cyan-500 hover:bg-cyan-600">
                   <Plus className="w-4 h-4" />
                   New Task
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -144,17 +153,17 @@ export default function App() {
               <p className="text-sm text-gray-500">{agents.length} agents configured</p>
             </div>
 
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white hover:bg-gray-50 mb-4">
+            <Button variant="outline" className="gap-2 mb-4">
               <RefreshCw className="w-4 h-4" />
               Sync from OpenClaw
-            </button>
+            </Button>
 
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search agents..."
-                className="bg-white border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm w-72 focus:outline-none focus:border-cyan-500"
+                className="pl-10 w-72"
               />
             </div>
 

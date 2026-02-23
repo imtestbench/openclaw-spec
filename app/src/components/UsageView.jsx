@@ -1,4 +1,13 @@
-import { TrendingUp, Zap, DollarSign, Clock, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { TrendingUp, Zap, DollarSign, ArrowUpRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 function formatNumber(num) {
   if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -6,24 +15,26 @@ function formatNumber(num) {
   return num.toString();
 }
 
-function StatCard({ title, value, subtitle, icon: Icon, trend, trendUp }) {
+function StatCard({ title, value, subtitle, icon: Icon, trend }) {
   return (
-    <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-      <div className="flex items-start justify-between mb-3">
-        <div className="p-2 bg-gray-50 rounded-lg">
-          <Icon className="w-5 h-5 text-gray-600" />
-        </div>
-        {trend && (
-          <div className={`flex items-center gap-1 text-xs ${trendUp ? 'text-green-600' : 'text-red-500'}`}>
-            {trendUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-            {trend}
+    <Card>
+      <CardContent className="p-5">
+        <div className="flex items-start justify-between mb-3">
+          <div className="p-2 bg-gray-50 rounded-lg">
+            <Icon className="w-5 h-5 text-gray-600" />
           </div>
-        )}
-      </div>
-      <div className="text-2xl font-semibold text-gray-900">{value}</div>
-      <div className="text-sm text-gray-500">{title}</div>
-      {subtitle && <div className="text-xs text-gray-400 mt-1">{subtitle}</div>}
-    </div>
+          {trend && (
+            <div className="flex items-center gap-1 text-xs text-green-600">
+              <ArrowUpRight className="w-3 h-3" />
+              {trend}
+            </div>
+          )}
+        </div>
+        <div className="text-2xl font-semibold text-gray-900">{value}</div>
+        <div className="text-sm text-gray-500">{title}</div>
+        {subtitle && <div className="text-xs text-gray-400 mt-1">{subtitle}</div>}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -38,7 +49,6 @@ export default function UsageView({ usageData, costData }) {
           value={`$${costData.today.toFixed(2)}`}
           subtitle={`$${costData.month.toFixed(2)} this month`}
           trend="+12%"
-          trendUp={true}
         />
         <StatCard 
           icon={Zap} 
@@ -62,91 +72,101 @@ export default function UsageView({ usageData, costData }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Usage by Agent */}
-        <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-4">Usage by Agent</h3>
-          <div className="space-y-3">
-            {usageData.byAgent.map((agent) => (
-              <div key={agent.name} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm">
-                    {agent.name[0]}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Usage by Agent</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {usageData.byAgent.map((agent) => (
+                <div key={agent.name} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium">
+                      {agent.name[0]}
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-900">{agent.name}</div>
+                      <div className="text-xs text-gray-500">{agent.requests} requests</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-medium text-gray-900">{agent.name}</div>
-                    <div className="text-xs text-gray-500">{agent.requests} requests</div>
+                  <div className="text-right">
+                    <div className="font-medium text-gray-900">${agent.cost.toFixed(2)}</div>
+                    <div className="text-xs text-gray-500">{formatNumber(agent.inputTokens + agent.outputTokens)} tokens</div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-medium text-gray-900">${agent.cost.toFixed(2)}</div>
-                  <div className="text-xs text-gray-500">{formatNumber(agent.inputTokens + agent.outputTokens)} tokens</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Usage by Model */}
-        <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-4">Usage by Model</h3>
-          <div className="space-y-3">
-            {usageData.byModel.map((model) => (
-              <div key={model.name} className="py-2 border-b border-gray-50 last:border-0">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-sm text-gray-700">{model.name}</span>
-                  <span className="font-medium text-gray-900">${model.cost.toFixed(2)}</span>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Usage by Model</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {usageData.byModel.map((model) => (
+                <div key={model.name} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <code className="text-sm text-gray-700">{model.name}</code>
+                    <span className="font-medium text-gray-900">${model.cost.toFixed(2)}</span>
+                  </div>
+                  <div className="flex gap-4 text-xs text-gray-500">
+                    <span>In: {formatNumber(model.inputTokens)}</span>
+                    <span>Out: {formatNumber(model.outputTokens)}</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-cyan-500 rounded-full transition-all"
+                      style={{ width: `${(model.cost / costData.month) * 100}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="flex gap-4 text-xs text-gray-500">
-                  <span>In: {formatNumber(model.inputTokens)}</span>
-                  <span>Out: {formatNumber(model.outputTokens)}</span>
-                </div>
-                <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-cyan-500 rounded-full"
-                    style={{ width: `${(model.cost / costData.month) * 100}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Recent Runs */}
-      <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
-        <h3 className="font-semibold text-gray-900 mb-4">Recent Runs</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-gray-500 border-b border-gray-100">
-                <th className="pb-3 font-medium">Task</th>
-                <th className="pb-3 font-medium">Agent</th>
-                <th className="pb-3 font-medium">Model</th>
-                <th className="pb-3 font-medium text-right">Tokens</th>
-                <th className="pb-3 font-medium text-right">Cost</th>
-                <th className="pb-3 font-medium text-right">Duration</th>
-                <th className="pb-3 font-medium text-right">Time</th>
-              </tr>
-            </thead>
-            <tbody>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Recent Runs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Task</TableHead>
+                <TableHead>Agent</TableHead>
+                <TableHead>Model</TableHead>
+                <TableHead className="text-right">Tokens</TableHead>
+                <TableHead className="text-right">Cost</TableHead>
+                <TableHead className="text-right">Duration</TableHead>
+                <TableHead className="text-right">Time</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {usageData.recentRuns.map((run) => (
-                <tr key={run.id} className="border-b border-gray-50 last:border-0">
-                  <td className="py-3 font-medium text-gray-900">{run.task}</td>
-                  <td className="py-3 text-gray-600">{run.agent}</td>
-                  <td className="py-3 font-mono text-xs text-gray-500">{run.model}</td>
-                  <td className="py-3 text-right text-gray-600">
+                <TableRow key={run.id}>
+                  <TableCell className="font-medium">{run.task}</TableCell>
+                  <TableCell>{run.agent}</TableCell>
+                  <TableCell><code className="text-xs">{run.model}</code></TableCell>
+                  <TableCell className="text-right">
                     <span className="text-gray-400">{formatNumber(run.inputTokens)}</span>
                     {' / '}
                     <span>{formatNumber(run.outputTokens)}</span>
-                  </td>
-                  <td className="py-3 text-right font-medium text-gray-900">${run.cost.toFixed(2)}</td>
-                  <td className="py-3 text-right text-gray-500">{run.duration}</td>
-                  <td className="py-3 text-right text-gray-400">{run.time}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell className="text-right font-medium">${run.cost.toFixed(2)}</TableCell>
+                  <TableCell className="text-right text-gray-500">{run.duration}</TableCell>
+                  <TableCell className="text-right text-gray-400">{run.time}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 }

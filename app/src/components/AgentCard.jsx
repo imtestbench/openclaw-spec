@@ -1,6 +1,9 @@
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
 export default function AgentCard({ agent }) {
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow">
       {/* Avatar placeholder - colored gradient */}
       <div 
         className="h-48 flex items-center justify-center text-6xl"
@@ -9,17 +12,17 @@ export default function AgentCard({ agent }) {
         🤖
       </div>
       
-      <div className="p-4">
+      <CardContent className="p-4">
         <div className="flex items-center justify-between mb-1">
           <h3 className="font-semibold text-gray-900">{agent.name}</h3>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span className="text-sm text-gray-500">Idle</span>
-          </div>
+          <Badge variant="secondary" className="gap-1.5 bg-cyan-50 text-cyan-700 hover:bg-cyan-50">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
+            Idle
+          </Badge>
         </div>
         <p className="text-gray-500 text-sm mb-3">{agent.role}</p>
-        <p className="text-xs text-gray-400 font-mono">{agent.model}</p>
-      </div>
-    </div>
+        <code className="text-xs text-gray-400">{agent.model}</code>
+      </CardContent>
+    </Card>
   );
 }
