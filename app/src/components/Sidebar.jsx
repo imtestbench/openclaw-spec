@@ -1,4 +1,4 @@
-import { LayoutGrid, Users, BarChart3, Moon, Sun, Cog, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LayoutGrid, Users, BarChart3, Moon, Sun, Cog, ChevronLeft, ChevronRight, Brain } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -13,6 +13,7 @@ export default function Sidebar({ user, view, setView, darkMode, setDarkMode, co
   const navItems = [
     { id: 'tasks', label: 'Tasks', icon: LayoutGrid },
     { id: 'agents', label: 'Agents', icon: Users },
+    { id: 'memory', label: 'Memory & Keys', icon: Brain },
     { id: 'usage', label: 'Usage & Cost', icon: BarChart3 },
   ];
 

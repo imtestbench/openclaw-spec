@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import NewTaskDialog from './components/NewTaskDialog';
 import TaskDetailPanel from './components/TaskDetailPanel';
 import AgentDetailPanel from './components/AgentDetailPanel';
+import MemoryView from './components/MemoryView';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -189,6 +190,17 @@ export default function App() {
                   <AgentCard key={agent.id} agent={agent} onClick={setSelectedAgent} />
                 ))}
               </div>
+            </>
+          )}
+
+          {/* Memory & Keys View */}
+          {view === 'memory' && (
+            <>
+              <div className="mb-6">
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Memory & Keys</h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400">System memory, agent knowledge, and API connections</p>
+              </div>
+              <MemoryView agents={agents} />
             </>
           )}
 
