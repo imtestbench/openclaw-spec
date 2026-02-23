@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Search, LayoutGrid, List, Plus, RefreshCw, ChevronDown } from 'lucide-react';
-import { agents, initialTasks, costData } from './data/mockData';
+import { agents, initialTasks, costData, usageData } from './data/mockData';
 import AgentCard from './components/AgentCard';
 import KanbanBoard from './components/KanbanBoard';
+import UsageView from './components/UsageView';
 
 export default function App() {
   const [tasks, setTasks] = useState(initialTasks);
@@ -79,6 +80,16 @@ export default function App() {
           >
             Agents
           </button>
+          <button
+            onClick={() => setView('usage')}
+            className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+              view === 'usage' 
+                ? 'border-cyan-500 text-cyan-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Usage & Cost
+          </button>
         </div>
 
         {/* Tasks View */}
@@ -152,6 +163,17 @@ export default function App() {
                 <AgentCard key={agent.id} agent={agent} />
               ))}
             </div>
+          </>
+        )}
+
+        {/* Usage & Cost View */}
+        {view === 'usage' && (
+          <>
+            <div className="mb-6">
+              <h1 className="text-2xl font-semibold text-gray-900">Usage & Cost</h1>
+              <p className="text-sm text-gray-500">Token usage and cost breakdown</p>
+            </div>
+            <UsageView usageData={usageData} costData={costData} />
           </>
         )}
       </div>

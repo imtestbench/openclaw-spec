@@ -27,4 +27,36 @@ export const initialTasks = {
 export const costData = {
   today: 0.73,
   month: 219.98,
+  total: 1247.32,
+};
+
+export const usageData = {
+  today: {
+    inputTokens: 45200,
+    outputTokens: 12800,
+    requests: 23,
+  },
+  month: {
+    inputTokens: 12450000,
+    outputTokens: 3280000,
+    requests: 4521,
+  },
+  byAgent: [
+    { name: 'Claw', inputTokens: 5200000, outputTokens: 1400000, cost: 89.50, requests: 1823 },
+    { name: 'Bernard', inputTokens: 4100000, outputTokens: 1100000, cost: 72.30, requests: 1402 },
+    { name: 'Vale', inputTokens: 1800000, outputTokens: 480000, cost: 31.20, requests: 687 },
+    { name: 'Gumbo', inputTokens: 1350000, outputTokens: 300000, cost: 26.98, requests: 609 },
+  ],
+  byModel: [
+    { name: 'claude-opus-4.6', inputTokens: 8100000, outputTokens: 2200000, cost: 156.80 },
+    { name: 'claude-sonnet-4.5', inputTokens: 3150000, outputTokens: 780000, cost: 48.20 },
+    { name: 'claude-haiku', inputTokens: 1200000, outputTokens: 300000, cost: 14.98 },
+  ],
+  recentRuns: [
+    { id: 'r1', task: 'Daily synthesis', agent: 'Gumbo', model: 'claude-sonnet-4.5', inputTokens: 2400, outputTokens: 890, cost: 0.08, duration: '45s', time: '2 min ago' },
+    { id: 'r2', task: 'Code review', agent: 'Bernard', model: 'claude-opus-4.6', inputTokens: 8200, outputTokens: 3100, cost: 0.34, duration: '2m 12s', time: '15 min ago' },
+    { id: 'r3', task: 'Email draft', agent: 'Vale', model: 'claude-sonnet-4.5', inputTokens: 1200, outputTokens: 650, cost: 0.04, duration: '18s', time: '32 min ago' },
+    { id: 'r4', task: 'Research summary', agent: 'Claw', model: 'claude-opus-4.6', inputTokens: 12400, outputTokens: 4200, cost: 0.52, duration: '3m 5s', time: '1 hr ago' },
+    { id: 'r5', task: 'Intake processing', agent: 'Gumbo', model: 'claude-sonnet-4.5', inputTokens: 1800, outputTokens: 420, cost: 0.05, duration: '22s', time: '1 hr ago' },
+  ],
 };
