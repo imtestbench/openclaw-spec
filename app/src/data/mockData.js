@@ -1,8 +1,16 @@
+export const user = {
+  name: 'Testbench',
+  email: 'testbench@example.com',
+  avatar: null,
+  plan: 'Pro',
+  workspace: 'Personal',
+};
+
 export const agents = [
-  { id: '1', name: 'Claw', role: 'Admin', status: 'idle', model: 'claude-opus-4.6', avatar: '/avatars/claw.png', color: '#3b82f6' },
-  { id: '2', name: 'Bernard', role: 'Developer', status: 'idle', model: 'claude-opus-4.6', avatar: '/avatars/bernard.png', color: '#8b5cf6' },
-  { id: '3', name: 'Vale', role: 'Marketer', status: 'idle', model: 'claude-sonnet-4.5', avatar: '/avatars/vale.png', color: '#ec4899' },
-  { id: '4', name: 'Gumbo', role: 'Assistant', status: 'idle', model: 'claude-sonnet-4.5', avatar: '/avatars/gumbo.png', color: '#f97316' },
+  { id: '1', name: 'Claw', role: 'Admin', status: 'idle', model: 'claude-opus-4.6', color: '#3b82f6', costToday: 0.34, costMonth: 89.50 },
+  { id: '2', name: 'Bernard', role: 'Developer', status: 'running', model: 'claude-opus-4.6', color: '#8b5cf6', costToday: 0.22, costMonth: 72.30 },
+  { id: '3', name: 'Vale', role: 'Marketer', status: 'idle', model: 'claude-sonnet-4.5', color: '#ec4899', costToday: 0.12, costMonth: 31.20 },
+  { id: '4', name: 'Gumbo', role: 'Assistant', status: 'idle', model: 'claude-sonnet-4.5', color: '#f97316', costToday: 0.05, costMonth: 26.98 },
 ];
 
 export const initialTasks = {
@@ -31,16 +39,8 @@ export const costData = {
 };
 
 export const usageData = {
-  today: {
-    inputTokens: 45200,
-    outputTokens: 12800,
-    requests: 23,
-  },
-  month: {
-    inputTokens: 12450000,
-    outputTokens: 3280000,
-    requests: 4521,
-  },
+  today: { inputTokens: 45200, outputTokens: 12800, requests: 23 },
+  month: { inputTokens: 12450000, outputTokens: 3280000, requests: 4521 },
   byAgent: [
     { name: 'Claw', inputTokens: 5200000, outputTokens: 1400000, cost: 89.50, requests: 1823 },
     { name: 'Bernard', inputTokens: 4100000, outputTokens: 1100000, cost: 72.30, requests: 1402 },
