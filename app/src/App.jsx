@@ -6,6 +6,7 @@ import KanbanBoard from './components/KanbanBoard';
 import UsageView from './components/UsageView';
 import Sidebar from './components/Sidebar';
 import NewTaskDialog from './components/NewTaskDialog';
+import TaskDetailPanel from './components/TaskDetailPanel';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -21,6 +22,7 @@ export default function App() {
   const [view, setView] = useState('tasks');
   const [darkMode, setDarkMode] = useState(false);
   const [newTaskOpen, setNewTaskOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     if (darkMode) {
@@ -149,7 +151,7 @@ export default function App() {
                 </div>
               </div>
 
-              <KanbanBoard tasks={tasks} setTasks={setTasks} />
+              <KanbanBoard tasks={tasks} setTasks={setTasks} onTaskClick={setSelectedTask} />
             </>
           )}
 
@@ -203,6 +205,14 @@ export default function App() {
         agents={agents}
         onCreateTask={handleCreateTask}
       />
+
+      {/* Task Detail Panel */}
+      {selectedTask && (
+        <TaskDetailPanel 
+          task={selectedTask} 
+          onClose={() => setSelectedTask(null)} 
+        />
+      )}
     </div>
   );
 }

@@ -8,7 +8,7 @@ const columns = [
   { id: 'done', title: 'Done', color: '#22c55e' },
 ];
 
-export default function KanbanBoard({ tasks, setTasks }) {
+export default function KanbanBoard({ tasks, setTasks, onTaskClick }) {
   const onDragEnd = (result) => {
     if (!result.destination) return;
     
@@ -41,7 +41,7 @@ export default function KanbanBoard({ tasks, setTasks }) {
                 className="w-2.5 h-2.5 rounded-full"
                 style={{ backgroundColor: col.color }}
               />
-              <h3 className="font-medium text-gray-700">{col.title}</h3>
+              <h3 className="font-medium text-gray-700 dark:text-gray-300">{col.title}</h3>
               <span className="text-gray-400 text-sm">{tasks[col.id]?.length || 0}</span>
             </div>
             
@@ -57,15 +57,21 @@ export default function KanbanBoard({ tasks, setTasks }) {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={`min-h-[300px] space-y-2 rounded-lg p-2 transition-colors ${
-                    snapshot.isDraggingOver ? 'bg-cyan-50' : ''
+                    snapshot.isDraggingOver ? 'bg-cyan-50 dark:bg-cyan-900/20' : ''
                   }`}
                 >
                   {tasks[col.id]?.length === 0 && !snapshot.isDraggingOver && (
-                    <p className="text-center text-gray-400 text-sm py-8">No tasks</p>
+                    <p className="text-center text-gray-400 dark:text-gray-500 text-sm py-8">No tasks</p>
                   )}
                   {tasks[col.id]?.map((task, index) => (
                     <Draggable key={task.id} draggableId={task.id} index={index}>
-                      {(provided) => <TaskCard task={task} provided={provided} />}
+                      {(provided) => (
+                        <TaskCard 
+                          task={task} 
+                          provided={provided} 
+                          onClick={onTaskClick}
+                        />
+                      )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
