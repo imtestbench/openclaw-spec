@@ -1,44 +1,30 @@
 export const agents = [
-  { id: '1', name: 'Gumbo', role: 'Assistant', status: 'idle', model: 'claude-sonnet-4.5', profile: 'Ops Assistant', avatar: '🦞' },
-  { id: '2', name: 'Bernard', role: 'Analyst', status: 'running', model: 'claude-opus-4.5', profile: 'Research', avatar: '🐻', currentTask: 'Budget analysis' },
-  { id: '3', name: 'Scout', role: 'Monitor', status: 'waiting', model: 'claude-haiku', profile: 'Watcher', avatar: '🦅' },
-  { id: '4', name: 'Dash', role: 'Runner', status: 'idle', model: 'gpt-4o', profile: 'Quick Tasks', avatar: '⚡' },
-];
-
-export const profiles = [
-  { id: '1', name: 'Ops Assistant', default_model: 'claude-sonnet-4.5', tools: ['web', 'files', 'calendar'] },
-  { id: '2', name: 'Research', default_model: 'claude-opus-4.5', tools: ['web', 'memory', 'analysis'] },
-  { id: '3', name: 'Watcher', default_model: 'claude-haiku', tools: ['notifications', 'monitor'] },
-  { id: '4', name: 'Quick Tasks', default_model: 'gpt-4o', tools: ['web', 'files'] },
+  { id: '1', name: 'Claw', role: 'Admin', status: 'idle', model: 'claude-opus-4.6', avatar: '/avatars/claw.png', color: '#3b82f6' },
+  { id: '2', name: 'Bernard', role: 'Developer', status: 'idle', model: 'claude-opus-4.6', avatar: '/avatars/bernard.png', color: '#8b5cf6' },
+  { id: '3', name: 'Vale', role: 'Marketer', status: 'idle', model: 'claude-sonnet-4.5', avatar: '/avatars/vale.png', color: '#ec4899' },
+  { id: '4', name: 'Gumbo', role: 'Assistant', status: 'idle', model: 'claude-sonnet-4.5', avatar: '/avatars/gumbo.png', color: '#f97316' },
 ];
 
 export const initialTasks = {
   scheduled: [
-    { id: 't1', title: 'Weekly report', agent: 'Gumbo', priority: 'medium', scheduledTime: 'Mon 9am', progress: 0, eta: null, cost: 0 },
+    { id: 't1', title: 'Weekly rollup', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Fri 2/13 4pm' },
+    { id: 't2', title: 'Budget check', agent: 'Claw', agentColor: '#3b82f6', scheduledTime: 'Fri 2/13 12pm' },
+    { id: 't3', title: 'Open threads review', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Mon 2/16 1:30pm' },
+    { id: 't4', title: 'Monthly rollup', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Sun 3/1 10am' },
+    { id: 't5', title: 'Daily synthesis', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Fri 2/13 7pm' },
+    { id: 't6', title: 'Intake processing', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Fri 2/13 9am' },
   ],
-  ready: [
-    { id: 't2', title: 'Review PRs', agent: 'Scout', priority: 'high', progress: 0, eta: 15, cost: 0 },
-  ],
-  queue: [
-    { id: 't3', title: 'Data sync', agent: 'Dash', priority: 'low', progress: 0, eta: 5, cost: 0 },
-  ],
-  inProgress: [
-    { id: 't4', title: 'Budget analysis', agent: 'Bernard', priority: 'high', progress: 65, eta: 12, cost: 0.34 },
-    { id: 't5', title: 'Email triage', agent: 'Gumbo', priority: 'medium', progress: 30, eta: 8, cost: 0.12 },
-  ],
-  review: [
-    { id: 't6', title: 'Meeting notes', agent: 'Gumbo', priority: 'low', progress: 100, eta: 0, cost: 0.08 },
-  ],
-  blocked: [],
+  queue: [],
+  inProgress: [],
   done: [
-    { id: 't7', title: 'Morning briefing', agent: 'Bernard', priority: 'medium', progress: 100, eta: 0, cost: 0.22 },
-    { id: 't8', title: 'Calendar check', agent: 'Scout', priority: 'low', progress: 100, eta: 0, cost: 0.02 },
+    { id: 't7', title: 'Intake processing', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Thu 2/12 9am' },
+    { id: 't8', title: 'Daily synthesis', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Thu 2/12 7pm' },
+    { id: 't9', title: 'Intake processing', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Thu 2/12 2pm' },
+    { id: 't10', title: 'Intake processing', agent: 'Gumbo', agentColor: '#f97316', scheduledTime: 'Thu 2/12 7pm' },
   ],
 };
 
 export const costData = {
-  today: 4.82,
-  total: 127.45,
-  byAgent: { Gumbo: 1.24, Bernard: 2.15, Scout: 0.43, Dash: 1.00 },
-  byModel: { 'claude-sonnet-4.5': 2.50, 'claude-opus-4.5': 1.82, 'claude-haiku': 0.30, 'gpt-4o': 0.20 },
+  today: 0.73,
+  month: 219.98,
 };

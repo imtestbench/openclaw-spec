@@ -1,59 +1,33 @@
-import { Clock, DollarSign } from 'lucide-react';
-
-const priorityColors = {
-  high: 'border-l-red-500',
-  medium: 'border-l-yellow-500',
-  low: 'border-l-green-500',
-};
+import { Calendar, ExternalLink } from 'lucide-react';
 
 export default function TaskCard({ task, provided }) {
   return (
     <div
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-      className={`bg-slate-700 rounded-lg p-3 border-l-4 ${priorityColors[task.priority]} hover:bg-slate-650 cursor-grab active:cursor-grabbing`}
+      ref={provided?.innerRef}
+      {...provided?.draggableProps}
+      {...provided?.dragHandleProps}
+      className="bg-white rounded-lg p-3 border border-gray-100 hover:border-gray-200 shadow-sm hover:shadow transition-all cursor-grab active:cursor-grabbing"
     >
-      <h4 className="font-medium text-sm mb-2">{task.title}</h4>
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <h4 className="font-medium text-gray-900 text-sm">{task.title}</h4>
+        <ExternalLink className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+      </div>
       
-      <div className="text-xs text-slate-400 space-y-1">
-        <div>Agent: <span className="text-cyan-400">{task.agent}</span></div>
-        
-        {task.progress > 0 && task.progress < 100 && (
-          <div className="mt-2">
-            <div className="flex justify-between mb-1">
-              <span>Progress</span>
-              <span>{task.progress}%</span>
-            </div>
-            <div className="h-1.5 bg-slate-600 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-blue-500 rounded-full transition-all"
-                style={{ width: `${task.progress}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-600">
-          {task.eta !== null && task.eta > 0 && (
-            <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              <span>{task.eta}m</span>
-            </div>
-          )}
-          {task.scheduledTime && (
-            <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              <span>{task.scheduledTime}</span>
-            </div>
-          )}
-          {task.cost > 0 && (
-            <div className="flex items-center gap-1 text-green-400">
-              <DollarSign className="w-3 h-3" />
-              <span>{task.cost.toFixed(2)}</span>
-            </div>
-          )}
+      <div className="flex items-center gap-2 text-xs text-gray-500">
+        <div 
+          className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-medium"
+          style={{ backgroundColor: task.agentColor }}
+        >
+          {task.agent[0]}
         </div>
+        <span>{task.agent}</span>
+        
+        {task.scheduledTime && (
+          <>
+            <Calendar className="w-3 h-3 ml-1" />
+            <span>{task.scheduledTime}</span>
+          </>
+        )}
       </div>
     </div>
   );

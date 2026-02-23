@@ -2,13 +2,10 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';
 
 const columns = [
-  { id: 'scheduled', title: '📅 Scheduled', color: 'border-t-purple-500' },
-  { id: 'ready', title: '✅ Ready', color: 'border-t-green-500' },
-  { id: 'queue', title: '📋 Queue', color: 'border-t-slate-500' },
-  { id: 'inProgress', title: '🔄 In Progress', color: 'border-t-blue-500' },
-  { id: 'review', title: '👀 Review', color: 'border-t-yellow-500' },
-  { id: 'blocked', title: '🚫 Blocked', color: 'border-t-red-500' },
-  { id: 'done', title: '✓ Done', color: 'border-t-emerald-500' },
+  { id: 'scheduled', title: 'Scheduled', color: '#9ca3af' },
+  { id: 'queue', title: 'Queue', color: '#06b6d4' },
+  { id: 'inProgress', title: 'In Progress', color: '#eab308' },
+  { id: 'done', title: 'Done', color: '#22c55e' },
 ];
 
 export default function KanbanBoard({ tasks, setTasks }) {
@@ -37,20 +34,35 @@ export default function KanbanBoard({ tasks, setTasks }) {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex gap-4 overflow-x-auto pb-4">
         {columns.map((col) => (
-          <div key={col.id} className={`flex-shrink-0 w-72 bg-slate-800/50 rounded-xl border-t-4 ${col.color}`}>
-            <div className="p-3 border-b border-slate-700">
-              <h3 className="font-semibold text-sm flex items-center justify-between">
-                {col.title}
-                <span className="bg-slate-700 px-2 py-0.5 rounded-full text-xs">{tasks[col.id]?.length || 0}</span>
-              </h3>
+          <div key={col.id} className="flex-shrink-0 w-72">
+            {/* Column Header */}
+            <div className="flex items-center gap-2 mb-3">
+              <span 
+                className="w-2.5 h-2.5 rounded-full"
+                style={{ backgroundColor: col.color }}
+              />
+              <h3 className="font-medium text-gray-700">{col.title}</h3>
+              <span className="text-gray-400 text-sm">{tasks[col.id]?.length || 0}</span>
             </div>
+            
+            {/* Drop Zone Indicator */}
+            <div 
+              className="h-1 rounded-full mb-3"
+              style={{ backgroundColor: col.color + '40' }}
+            />
+
             <Droppable droppableId={col.id}>
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`p-2 min-h-[200px] space-y-2 ${snapshot.isDraggingOver ? 'bg-slate-700/30' : ''}`}
+                  className={`min-h-[300px] space-y-2 rounded-lg p-2 transition-colors ${
+                    snapshot.isDraggingOver ? 'bg-cyan-50' : ''
+                  }`}
                 >
+                  {tasks[col.id]?.length === 0 && !snapshot.isDraggingOver && (
+                    <p className="text-center text-gray-400 text-sm py-8">No tasks</p>
+                  )}
                   {tasks[col.id]?.map((task, index) => (
                     <Draggable key={task.id} draggableId={task.id} index={index}>
                       {(provided) => <TaskCard task={task} provided={provided} />}
