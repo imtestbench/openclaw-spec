@@ -32,7 +32,7 @@ export default function KanbanBoard({ tasks, setTasks, onTaskClick }) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 overflow-x-auto pb-4">
+      <div className="flex gap-4 overflow-x-auto pb-4 justify-center">
         {columns.map((col) => (
           <div key={col.id} className="flex-shrink-0 w-72">
             {/* Column Header */}

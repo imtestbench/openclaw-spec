@@ -103,7 +103,7 @@ export default function App() {
           {/* Tasks View */}
           {view === 'tasks' && (
             <>
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6 max-w-6xl mx-auto">
                 <div>
                   <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Tasks</h1>
                   <p className="text-sm text-gray-500 dark:text-gray-400">{activeTasks} active · {totalTasks} total</p>

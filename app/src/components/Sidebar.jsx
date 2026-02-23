@@ -1,4 +1,4 @@
-import { LayoutGrid, Users, BarChart3, Settings, Moon, Sun, LogOut, Cog } from 'lucide-react';
+import { LayoutGrid, Users, BarChart3, Moon, Sun, Cog } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -15,11 +15,15 @@ export default function Sidebar({ user, view, setView, darkMode, setDarkMode }) 
     <div className="w-64 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col fixed left-0 top-0">
       {/* Logo */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-white font-bold">
-            O
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
           </div>
-          <span className="font-semibold text-gray-900 dark:text-white">OpenClaw</span>
+          <span className="font-semibold text-gray-900 dark:text-white tracking-tight" style={{ fontFamily: "'JetBrains Mono', monospace" }}>Clawdboard</span>
         </div>
       </div>
 
@@ -60,7 +64,7 @@ export default function Sidebar({ user, view, setView, darkMode, setDarkMode }) 
       <div className="p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-9 w-9">
-            <AvatarFallback className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+            <AvatarFallback className="bg-gradient-to-br from-cyan-400 to-blue-600 text-white font-medium">
               {user.name[0]}
             </AvatarFallback>
           </Avatar>
@@ -71,10 +75,6 @@ export default function Sidebar({ user, view, setView, darkMode, setDarkMode }) 
           <Button variant="ghost" size="icon" className="h-8 w-8">
             <Cog className="w-4 h-4" />
           </Button>
-        </div>
-        <div className="mt-3 flex items-center justify-between text-xs">
-          <span className="text-gray-500 dark:text-gray-400">Plan: <span className="text-cyan-600 dark:text-cyan-400">{user.plan}</span></span>
-          <span className="text-gray-500 dark:text-gray-400">{user.workspace}</span>
         </div>
       </div>
     </div>
