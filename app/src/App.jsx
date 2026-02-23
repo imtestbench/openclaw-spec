@@ -27,7 +27,7 @@ export default function App() {
   const [newTaskOpen, setNewTaskOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Icon sidebar is always narrow
 
   useEffect(() => {
     if (darkMode) {
@@ -57,12 +57,10 @@ export default function App() {
         setView={setView} 
         darkMode={darkMode} 
         setDarkMode={setDarkMode}
-        collapsed={sidebarCollapsed}
-        setCollapsed={setSidebarCollapsed}
       />
 
       {/* Main Content */}
-      <div className={`transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-[72px]' : 'ml-64'}`}>
+      <div className="ml-14">
         {/* Top Navigation */}
         <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-3 sticky top-0 z-40">
           <div className="flex items-center justify-between">
