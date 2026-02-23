@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { DollarSign } from 'lucide-react';
+import { DollarSign, Activity, Bot, ChevronRight } from 'lucide-react';
 
 const statusConfig = {
   idle: { label: 'Idle', color: 'bg-cyan-500', badgeClass: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400' },
@@ -10,44 +10,65 @@ const statusConfig = {
   offline: { label: 'Offline', color: 'bg-gray-500', badgeClass: 'bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-400' },
 };
 
-export default function AgentCard({ agent }) {
+export default function AgentCard({ agent, onClick }) {
   const status = statusConfig[agent.status] || statusConfig.idle;
 
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow dark:bg-gray-800 dark:border-gray-700">
-      {/* Avatar placeholder - colored gradient */}
+    <Card 
+      className="overflow-hidden hover:shadow-lg transition-all cursor-pointer dark:bg-gray-800 dark:border-gray-700 group hover:border-cyan-300 dark:hover:border-cyan-600"
+      onClick={() => onClick?.(agent)}
+    >
+      {/* Header with gradient */}
       <div 
-        className="h-40 flex items-center justify-center text-5xl"
-        style={{ background: `linear-gradient(135deg, ${agent.color}22, ${agent.color}44)` }}
+        className="h-32 flex items-center justify-center relative"
+        style={{ background: `linear-gradient(135deg, ${agent.color}22, ${agent.color}55)` }}
       >
-        🤖
-      </div>
-      
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-1">
-          <h3 className="font-semibold text-gray-900 dark:text-white">{agent.name}</h3>
-          <Badge variant="secondary" className={`gap-1.5 ${status.badgeClass}`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${status.color}`}></span>
+        <div 
+          className="w-20 h-20 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform"
+        >
+          <Bot className="w-10 h-10" style={{ color: agent.color }} />
+        </div>
+        
+        {/* Status indicator */}
+        <div className="absolute top-3 right-3">
+          <Badge className={`${status.badgeClass} text-xs`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${status.color} mr-1.5`}></span>
             {status.label}
           </Badge>
         </div>
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">{agent.role}</p>
+      </div>
+      
+      <CardContent className="p-4">
+        {/* Name and Role */}
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">{agent.name}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">{agent.role}</p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-cyan-500 transition-colors" />
+        </div>
         
         {/* Cost Display */}
-        <div className="flex items-center justify-between py-2 px-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg mb-3">
-          <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
-            <DollarSign className="w-3 h-3" />
-            Today
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="flex items-center gap-2 py-2 px-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+            <DollarSign className="w-4 h-4 text-green-500" />
+            <div>
+              <div className="font-semibold text-gray-900 dark:text-white text-sm">${agent.costToday.toFixed(2)}</div>
+              <div className="text-xs text-gray-400">Today</div>
+            </div>
           </div>
-          <span className="font-medium text-gray-900 dark:text-white">${agent.costToday.toFixed(2)}</span>
-        </div>
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-gray-400">This month</span>
-          <span className="text-gray-600 dark:text-gray-300">${agent.costMonth.toFixed(2)}</span>
+          <div className="flex items-center gap-2 py-2 px-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+            <Activity className="w-4 h-4 text-blue-500" />
+            <div>
+              <div className="font-semibold text-gray-900 dark:text-white text-sm">${agent.costMonth.toFixed(2)}</div>
+              <div className="text-xs text-gray-400">Month</div>
+            </div>
+          </div>
         </div>
         
-        <div className="mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-          <code className="text-xs text-gray-400">{agent.model}</code>
+        {/* Model */}
+        <div className="pt-3 border-t border-gray-100 dark:border-gray-700">
+          <code className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{agent.model}</code>
         </div>
       </CardContent>
     </Card>

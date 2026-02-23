@@ -7,6 +7,7 @@ import UsageView from './components/UsageView';
 import Sidebar from './components/Sidebar';
 import NewTaskDialog from './components/NewTaskDialog';
 import TaskDetailPanel from './components/TaskDetailPanel';
+import AgentDetailPanel from './components/AgentDetailPanel';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -23,6 +24,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [newTaskOpen, setNewTaskOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedAgent, setSelectedAgent] = useState(null);
 
   useEffect(() => {
     if (darkMode) {
@@ -179,7 +181,7 @@ export default function App() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {agents.map((agent) => (
-                  <AgentCard key={agent.id} agent={agent} />
+                  <AgentCard key={agent.id} agent={agent} onClick={setSelectedAgent} />
                 ))}
               </div>
             </>
@@ -211,6 +213,15 @@ export default function App() {
         <TaskDetailPanel 
           task={selectedTask} 
           onClose={() => setSelectedTask(null)} 
+        />
+      )}
+
+      {/* Agent Detail Panel */}
+      {selectedAgent && (
+        <AgentDetailPanel 
+          agent={selectedAgent} 
+          onClose={() => setSelectedAgent(null)}
+          onSave={(updated) => console.log('Save agent:', updated)}
         />
       )}
     </div>
