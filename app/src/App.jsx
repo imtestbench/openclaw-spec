@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export default function App() {
   const [tasks, setTasks] = useState(initialTasks);
@@ -25,6 +26,7 @@ export default function App() {
   const [newTaskOpen, setNewTaskOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -45,6 +47,7 @@ export default function App() {
   };
 
   return (
+    <TooltipProvider>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
       {/* Sidebar */}
       <Sidebar 
@@ -52,11 +55,13 @@ export default function App() {
         view={view} 
         setView={setView} 
         darkMode={darkMode} 
-        setDarkMode={setDarkMode} 
+        setDarkMode={setDarkMode}
+        collapsed={sidebarCollapsed}
+        setCollapsed={setSidebarCollapsed}
       />
 
       {/* Main Content */}
-      <div className="ml-64">
+      <div className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {/* Top Navigation */}
         <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-3 sticky top-0 z-40">
           <div className="flex items-center justify-between">
@@ -225,5 +230,6 @@ export default function App() {
         />
       )}
     </div>
+    </TooltipProvider>
   );
 }
