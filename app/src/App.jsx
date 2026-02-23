@@ -7,6 +7,7 @@ import UsageView from './components/UsageView';
 import Sidebar from './components/Sidebar';
 import NewTaskDialog from './components/NewTaskDialog';
 import TaskDetailPanel from './components/TaskDetailPanel';
+import TaskListView from './components/TaskListView';
 import AgentDetailPanel from './components/AgentDetailPanel';
 import MemoryView from './components/MemoryView';
 import { Button } from '@/components/ui/button';
@@ -27,7 +28,7 @@ export default function App() {
   const [newTaskOpen, setNewTaskOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
-  // Icon sidebar is always narrow
+  const [taskViewMode, setTaskViewMode] = useState('grid'); // grid or list
 
   useEffect(() => {
     if (darkMode) {
@@ -139,10 +140,20 @@ export default function App() {
                   </DropdownMenu>
                   
                   <div className="flex border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                    <Button variant="ghost" size="icon" className="rounded-none border-r dark:border-gray-700">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className={`rounded-none border-r dark:border-gray-700 ${taskViewMode === 'grid' ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
+                      onClick={() => setTaskViewMode('grid')}
+                    >
                       <LayoutGrid className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="rounded-none">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className={`rounded-none ${taskViewMode === 'list' ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
+                      onClick={() => setTaskViewMode('list')}
+                    >
                       <List className="w-4 h-4" />
                     </Button>
                   </div>
@@ -157,7 +168,11 @@ export default function App() {
                 </div>
               </div>
 
+              {taskViewMode === 'grid' ? (
               <KanbanBoard tasks={tasks} setTasks={setTasks} onTaskClick={setSelectedTask} />
+            ) : (
+              <TaskListView tasks={tasks} onTaskClick={setSelectedTask} />
+            )}
             </>
           )}
 
