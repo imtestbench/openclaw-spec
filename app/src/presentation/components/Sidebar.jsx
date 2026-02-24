@@ -1,11 +1,11 @@
 import { LayoutGrid, Users, BarChart3, Moon, Sun, Cog, Brain, Settings2 } from 'lucide-react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/presentation/components/ui/avatar';
+import { Button } from '@/presentation/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@/presentation/components/ui/tooltip';
 
 export default function Sidebar({ user, view, setView, darkMode, setDarkMode }) {
   const navItems = [

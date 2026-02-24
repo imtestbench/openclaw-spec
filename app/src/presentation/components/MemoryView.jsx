@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Brain, Key, Plus, Eye, EyeOff, Trash2, Save, Database, User, Globe, Lock, Edit2 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/presentation/components/ui/card';
+import { Button } from '@/presentation/components/ui/button';
+import { Input } from '@/presentation/components/ui/input';
+import { Label } from '@/presentation/components/ui/label';
+import { Textarea } from '@/presentation/components/ui/textarea';
+import { Badge } from '@/presentation/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/presentation/components/ui/tabs';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/presentation/components/ui/dialog';
 
 const mockSystemMemory = [
   { id: 'm1', key: 'user_preferences', value: 'Prefers concise responses, timezone: Asia/Singapore, communication style: casual', scope: 'global', updatedAt: '2 hours ago' },

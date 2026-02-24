@@ -1,5 +1,5 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/presentation/components/ui/card';
+import { Badge } from '@/presentation/components/ui/badge';
 import { DollarSign, Activity, Bot, ChevronRight } from 'lucide-react';
 
 const statusConfig = {

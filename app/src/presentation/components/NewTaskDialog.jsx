@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Plus } from 'lucide-react';
+import { Button } from '@/presentation/components/ui/button';
+import { Input } from '@/presentation/components/ui/input';
+import { Label } from '@/presentation/components/ui/label';
+import { Textarea } from '@/presentation/components/ui/textarea';
 import {
   Dialog,
   DialogContent,
@@ -10,16 +11,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+  DialogTrigger,
+} from '@/presentation/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/presentation/components/ui/select';
 
-export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask }) {
+export default function NewTaskDialog({ agents, onCreateTask }) {
+  const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [agent, setAgent] = useState('');
@@ -29,28 +32,34 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !agent) return;
-    
+
     onCreateTask({
       id: 't' + Date.now(),
       title,
       description,
       agent,
-      agentColor: agents.find(a => a.name === agent)?.color || '#6b7280',
+      agentColor: agents.find((a) => a.name === agent)?.color || '#6b7280',
       priority,
       scheduledTime: scheduledTime || null,
     });
-    
+
     // Reset form
     setTitle('');
     setDescription('');
     setAgent('');
     setPriority('medium');
     setScheduledTime('');
-    onOpenChange(false);
+    setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="gap-2 bg-violet-500 hover:bg-violet-600">
+          <Plus className="w-4 h-4" />
+          New Task
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Create New Task</DialogTitle>
@@ -70,7 +79,7 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
                 required
               />
             </div>
-            
+
             <div className="grid gap-2">
               <Label htmlFor="description">Description</Label>
               <Textarea
@@ -81,7 +90,7 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
                 rows={3}
               />
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label>Assign Agent</Label>
@@ -93,8 +102,8 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
                     {agents.map((a) => (
                       <SelectItem key={a.id} value={a.name}>
                         <div className="flex items-center gap-2">
-                          <div 
-                            className="w-2 h-2 rounded-full" 
+                          <div
+                            className="w-2 h-2 rounded-full"
                             style={{ backgroundColor: a.color }}
                           />
                           {a.name}
@@ -104,7 +113,7 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div className="grid gap-2">
                 <Label>Priority</Label>
                 <Select value={priority} onValueChange={setPriority}>
@@ -119,7 +128,7 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
                 </Select>
               </div>
             </div>
-            
+
             <div className="grid gap-2">
               <Label htmlFor="schedule">Schedule (optional)</Label>
               <Input
@@ -130,12 +139,12 @@ export default function NewTaskDialog({ open, onOpenChange, agents, onCreateTask
               />
             </div>
           </div>
-          
+
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-cyan-500 hover:bg-cyan-600">
+            <Button type="submit" className="bg-violet-500 hover:bg-violet-600">
               Create Task
             </Button>
           </DialogFooter>

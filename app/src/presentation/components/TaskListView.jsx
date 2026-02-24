@@ -1,5 +1,5 @@
 import { Calendar, User, Clock, ChevronRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/presentation/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/presentation/components/ui/table';
 
 const statusConfig = {
   scheduled: { label: 'Scheduled', color: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' },

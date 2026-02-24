@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { X, Save, Play, Settings, FileText, Activity, Terminal, DollarSign, Cpu, Clock, Edit2, Bot } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
+import { Button } from '@/presentation/components/ui/button';
+import { Badge } from '@/presentation/components/ui/badge';
+import { Input } from '@/presentation/components/ui/input';
+import { Label } from '@/presentation/components/ui/label';
+import { Textarea } from '@/presentation/components/ui/textarea';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/presentation/components/ui/tabs';
+import { Card, CardContent } from '@/presentation/components/ui/card';
+import { Switch } from '@/presentation/components/ui/switch';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/presentation/components/ui/select';
 
 const mockAgentDetails = {
   systemPrompt: `You are a helpful AI assistant focused on administrative tasks.

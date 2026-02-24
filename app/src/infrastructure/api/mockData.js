@@ -1,9 +1,12 @@
+/**
+ * Mock data for development
+ * In production, this would be replaced with actual API calls
+ */
+
 export const user = {
   name: 'Testbench',
   email: 'testbench@example.com',
   avatar: null,
-  plan: 'Pro',
-  workspace: 'Personal',
 };
 
 export const agents = [
@@ -60,3 +63,14 @@ export const usageData = {
     { id: 'r5', task: 'Intake processing', agent: 'Gumbo', model: 'claude-sonnet-4.5', inputTokens: 1800, outputTokens: 420, cost: 0.05, duration: '22s', time: '1 hr ago' },
   ],
 };
+
+export const systemMemory = [
+  { id: 'm1', key: 'user_preferences', value: 'Prefers concise responses, timezone: Asia/Singapore', scope: 'global', updatedAt: '2 hours ago' },
+  { id: 'm2', key: 'project_context', value: 'Working on Clawdboard - AI orchestration platform', scope: 'global', updatedAt: '1 day ago' },
+];
+
+export const apiKeys = [
+  { id: 'k1', name: 'Anthropic API', key: 'sk-ant-api03-****************************', status: 'active', lastUsed: '2 min ago' },
+  { id: 'k2', name: 'OpenAI API', key: 'sk-****************************', status: 'active', lastUsed: '1 hour ago' },
+  { id: 'k3', name: 'GitHub Token', key: 'ghp_****************************', status: 'active', lastUsed: '15 min ago' },
+];
